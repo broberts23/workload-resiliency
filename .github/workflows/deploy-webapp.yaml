@@ -36,11 +36,11 @@ jobs:
         with:
           azcliversion: 2.59.0
           inlineScript: |
-            az deployment group create --resource-group ${{ env.rg-east }} --name rollout01 --template-file webapp.bicep --parameters .\parameters\${{ env.env }}\aue.bicepparam
+            az deployment group create --resource-group ${{ env.rg-east }} --template-file webapp.bicep --parameters .\parameters\${{ env.env }}\aue.bicepparam
 
       - name: Deploy SouthEast
         uses: azure/cli@v2
         with:
           azcliversion: 2.59.0
           inlineScript: |
-            az deployment group create --resource-group ${{ env.rg-southeast }} --name rollout02 --template-file webapp.bicep --parameters .\parameters\${{ env.env }}\aus.bicepparam
+            az deployment group create --resource-group ${{ env.rg-southeast }} --template-file webapp.bicep --parameters .\parameters\${{ env.env }}\aus.bicepparam

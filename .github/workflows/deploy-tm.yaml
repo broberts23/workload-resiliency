@@ -9,8 +9,6 @@ permissions:
 
 env:
   resource-group: RG1 # name of the Azure resource group
-  webAppNameAUE: dev-aue-webapp # name of the Azure web app
-  webAppNameAUS: dev-aus-webapp # name of the Azure web app
 
 jobs:
   bicep-deploy:
@@ -36,4 +34,4 @@ jobs:
         with:
           azcliversion: 2.59.0
           inlineScript: |
-            az deployment group create --resource-group ${{ env.resource-group }} --template-file main.bicep --parameters webAppNameAUE=${{ env.webAppNameAUE }} webAppNameAUE=${{ env.webAppNameAUS }}
+            az deployment group create --resource-group ${{ env.resource-group }} --template-file main.bicep --parameters main.bicepparam

@@ -1,9 +1,22 @@
+@description('Environment Name')
 param env string
+
+@description('Region Name')
 param region string
+
+@description('Azure Container Registry Name')
 param acrName string
+
+@description('Application Version (tag)')
 param appVersion string
+
+@description('Application/Registry Name')
 param appName string = 'app2003'
+
+@description('Resource Group Location')
 param location string = resourceGroup().location
+
+@description('User Assigned Identity Name')
 param umiName string
 
 var webAppName = '${env}-${region}-webapp'
@@ -42,6 +55,8 @@ resource webapp 'Microsoft.Web/sites@2023-01-01' = {
   }
   properties: {
     enabled: true
+    // required for the webapp to REALLY be linux. If this is set to false
+    // the webapp will be Windows, even though the Kind is set to linux.
     reserved: true
     serverFarmId: asp.id
     publicNetworkAccess: 'Enabled'

@@ -89,7 +89,7 @@ resource choasStudio 'Microsoft.Chaos/experiments@2024-01-01' = {
               resourceId(aue_rg, 'Microsoft.Web/sites', webAppNameAUE),
               'Microsoft.Chaos/targets',
               'microsoft-appservice'
-            ) // '/subscriptions/ef221f00-5632-40a1-a7e4-bd5f97a673d8/resourceGroups/dev-aue-rg/providers/microsoft.web/sites/dev-aue-webapp/providers/Microsoft.Chaos/targets/microsoft-appservice'
+            )
             type: 'ChaosTarget'
           }
           {
@@ -97,7 +97,7 @@ resource choasStudio 'Microsoft.Chaos/experiments@2024-01-01' = {
               resourceId(sea_rg, 'Microsoft.Web/sites', webAppNameSEA),
               'Microsoft.Chaos/targets',
               'microsoft-appservice'
-            ) //'/subscriptions/ef221f00-5632-40a1-a7e4-bd5f97a673d8/resourceGroups/dev-aue-rg/providers/microsoft.web/sites/dev-aue-webapp/providers/Microsoft.Chaos/targets/microsoft-appservice'
+            )
             type: 'ChaosTarget'
           }
         ]
