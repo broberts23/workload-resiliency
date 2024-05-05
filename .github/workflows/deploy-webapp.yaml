@@ -1,0 +1,46 @@
+name: Deploy Web Apps
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  rg-east: dev-aue-rg # name of the Azure resource group
+  rg-southeast: dev-aus-rg # name of the Azure resource group
+  env: dev
+
+jobs:
+  bicep-deploy:
+    name: "Bicep Deploy"
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Authenticate to Az CLI using OIDC
+      - name: "Az CLI login"
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy East
+        uses: azure/cli@v2
+        with:
+          azcliversion: 2.59.0
+          inlineScript: |
+            az deployment group create --resource-group ${{ env.rg-east }} --name rollout01 --template-file webapp.bicep --parameters .\parameters\${{ env.env }}\aue.bicepparam
+
+      - name: Deploy SouthEast
+        uses: azure/cli@v2
+        with:
+          azcliversion: 2.59.0
+          inlineScript: |
+            az deployment group create --resource-group ${{ env.rg-southeast }} --name rollout02 --template-file webapp.bicep --parameters .\parameters\${{ env.env }}\aus.bicepparam

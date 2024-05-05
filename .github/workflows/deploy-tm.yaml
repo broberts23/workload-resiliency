@@ -1,0 +1,39 @@
+name: Deploy Azure Infra
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  resource-group: RG1 # name of the Azure resource group
+  webAppNameAUE: dev-aue-webapp # name of the Azure web app
+  webAppNameAUS: dev-aus-webapp # name of the Azure web app
+
+jobs:
+  bicep-deploy:
+    name: "Bicep Deploy"
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Authenticate to Az CLI using OIDC
+      - name: "Az CLI login"
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Azure CLI script
+        uses: azure/cli@v2
+        with:
+          azcliversion: 2.59.0
+          inlineScript: |
+            az deployment group create --resource-group ${{ env.resource-group }} --template-file main.bicep --parameters webAppNameAUE=${{ env.webAppNameAUE }} webAppNameAUE=${{ env.webAppNameAUS }}
