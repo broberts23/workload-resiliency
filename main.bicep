@@ -71,7 +71,7 @@ resource umi 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-previe
 }
 
 resource choasStudio 'Microsoft.Chaos/experiments@2024-01-01' = {
-  name: 'dev-aue-cs'
+  name: 'dev-aue-cs-01'
   location: location
   identity: {
     type: 'UserAssigned'
@@ -87,14 +87,6 @@ resource choasStudio 'Microsoft.Chaos/experiments@2024-01-01' = {
           {
             id: extensionResourceId(
               resourceId(aue_rg, 'Microsoft.Web/sites', webAppNameAUE),
-              'Microsoft.Chaos/targets',
-              'microsoft-appservice'
-            )
-            type: 'ChaosTarget'
-          }
-          {
-            id: extensionResourceId(
-              resourceId(sea_rg, 'Microsoft.Web/sites', webAppNameSEA),
               'Microsoft.Chaos/targets',
               'microsoft-appservice'
             )
